@@ -24,7 +24,7 @@ import en.actionsofproject.ProjectEvolution;
 import en.actionsofproject.database.InsertDataIntoDistanceValue;
 import en.actionsofproject.ep.AddEntityPlacementIntoDB;
 
-/** 获取一些值->projectEvolution.run->InsertDataIntoDistance*/
+/** 获取一些值->projectEvolution.run->InsertDataIntoDistance，项目入口点*/
 
 public class ExtractClassName implements IWorkbenchWindowActionDelegate {
 
