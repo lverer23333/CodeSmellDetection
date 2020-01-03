@@ -162,6 +162,7 @@ public class InsertDataIntoDistanceValue {
 			Set<ClassObject> classObjectsToBeExamined = new LinkedHashSet<ClassObject>();
 			classObjectsToBeExamined.addAll(systemObject.getClassObjects());
 			
+			// 注意这里直接把systemObject获得的systemObject传进去了，因此一直都只有一个systemObject
 			MySystem system = new MySystem(systemObject, true);
 	
 			return system;	
