@@ -1,5 +1,8 @@
 package en.actions;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -19,17 +22,49 @@ import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.console.IConsole;
+import org.eclipse.ui.console.IConsoleManager;
+import org.eclipse.ui.console.MessageConsole;
+import org.eclipse.ui.console.MessageConsoleStream;
 
+import en.actionsofproject.FeatureEnvyDetect;
 import en.actionsofproject.ProjectEvolution;
+import en.actionsofproject.database.ActionsAboutDB;
 import en.actionsofproject.database.InsertDataIntoDistanceValue;
 import en.actionsofproject.ep.AddEntityPlacementIntoDB;
 
 /** 获取一些值->projectEvolution.run->InsertDataIntoDistance，项目入口点*/
 
 public class ExtractClassName implements IWorkbenchWindowActionDelegate {
+	public static MessageConsole console = null;
+    public static MessageConsoleStream consoleStream = null;
+    public static IConsoleManager consoleManager = null;
+    public static final String CONSOLE_NAME = "Console";
 
 	@Override
 	public void run(IAction action) {
+		
+		// 加载控制台
+    	consoleManager = ConsolePlugin.getDefault().getConsoleManager();
+	    IConsole[] consoles = consoleManager.getConsoles();
+	    if(consoles.length > 0){
+	        console = (MessageConsole)consoles[0];
+	    } else{
+	        console = new MessageConsole(CONSOLE_NAME, null);
+	        consoleManager.addConsoles(new IConsole[] { console });
+	    }
+	    consoleStream = console.newMessageStream();
+	    ExtractClassName.consoleStream.println("\n\n************************ Featrue Envy Detection *********************");
+	    ExtractClassName.consoleStream.println("**************************** Version:1.0.1 **************************");
+	    ExtractClassName.consoleStream.println("********************** Recently Update:2020.4.8 *********************");
+	    ExtractClassName.consoleStream.println("**** Beijing Institute of Technolog: College of Computer Science ****\n\n");
+	    ExtractClassName.consoleStream.println("Featrue Envy Detection Start!");
+	    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = new Date();
+		String s = simpleDateFormat.format(date);
+		ExtractClassName.consoleStream.println("Featrue Envy Detection Start time: " + s);
+	    
 		// Java插件中用于表示当前项目的IJavaProject和IProject
 		final IJavaProject selectedProject = JavaCore.create(getProject());
 		// 得到整个 Workspace 的根目录：
@@ -43,7 +78,7 @@ public class ExtractClassName implements IWorkbenchWindowActionDelegate {
 	            @Override
 	            public void run() {
 	            	MessageBox dialog=new MessageBox(shell,SWT.OK|SWT.ICON_INFORMATION);
-	 		        dialog.setText("Warning");
+	 		        dialog.setText("Warning"); 
 	 		        dialog.setMessage("Please select a JavaProject to ExtractName!");
 	 		        dialog.open();
 	 		        return;
@@ -59,7 +94,34 @@ public class ExtractClassName implements IWorkbenchWindowActionDelegate {
 				}	
 			 }		
 			System.out.println("IProject's  name----"+selectedIProject.getName());
+			
+			// 建表
+			ExtractClassName.consoleStream.println("--Restructuring Database...");
+		    simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			date = new Date();
+			s = simpleDateFormat.format(date);
+			ExtractClassName.consoleStream.println("--Database Refactor Start time: " + s);
+			ExtractClassName.consoleStream.println("----Target database: root.featureenvy");
+			ActionsAboutDB actionsAboutDB = new ActionsAboutDB();
+			try {
+				actionsAboutDB.createTables();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			ExtractClassName.consoleStream.println("--Database Restructured");
+		    simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			date = new Date();
+			s = simpleDateFormat.format(date);
+			ExtractClassName.consoleStream.println("--Database Refactor End time: " + s);
+			
 			// ep中自定义的类
+			ExtractClassName.consoleStream.println("--Project Evolveing...");
+		    simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			date = new Date();
+			s = simpleDateFormat.format(date);
+			ExtractClassName.consoleStream.println("--Project Evolvlution Start time: " + s);
+			
 			ProjectEvolution projectEvolution = new ProjectEvolution(selectedProject, selectedIProject);
 			try {
 				projectEvolution.run();
@@ -67,6 +129,8 @@ public class ExtractClassName implements IWorkbenchWindowActionDelegate {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			ExtractClassName.consoleStream.println("----Insert Data Into Distance Value");
 			InsertDataIntoDistanceValue insertDataIntoDistanceValue = new InsertDataIntoDistanceValue();
 			try {
 				insertDataIntoDistanceValue.AddDistanceMatric(selectedProject);
@@ -74,7 +138,31 @@ public class ExtractClassName implements IWorkbenchWindowActionDelegate {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			ExtractClassName.consoleStream.println("--Project Evolved");
+		    simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			date = new Date();
+			s = simpleDateFormat.format(date);
+			ExtractClassName.consoleStream.println("--Project Evolvlution End time: " + s);
 			
+			ExtractClassName.consoleStream.println("--Detecting...");
+		    simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			date = new Date();
+			s = simpleDateFormat.format(date);
+			ExtractClassName.consoleStream.println("--Detection Start time: " + s);
+			
+			FeatureEnvyDetect featureEnvyDetect = new FeatureEnvyDetect();
+			
+			ExtractClassName.consoleStream.println("--Detected");
+		    simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			date = new Date();
+			s = simpleDateFormat.format(date);
+			ExtractClassName.consoleStream.println("--Detection End time: " + s);
+			
+			ExtractClassName.consoleStream.println("\nFeatrue Envy Detection End!");
+			simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			date = new Date();
+			s = simpleDateFormat.format(date);
+			ExtractClassName.consoleStream.println("Featrue Envy Detection End time: " + s);
 //			AddEntityPlacementIntoDB addEntityPlacementIntoDB = new AddEntityPlacementIntoDB();
 //			try {
 //				addEntityPlacementIntoDB.AddEntityPlacement(selectedProject);

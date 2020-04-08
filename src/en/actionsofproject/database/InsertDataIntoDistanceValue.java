@@ -60,12 +60,14 @@ public class InsertDataIntoDistanceValue {
 		IWorkbench wb = PlatformUI.getWorkbench();
 		IProgressService ps = wb.getProgressService();
 		
+		// 获取mysystem
 		MySystem system = getMySystem(project);
 	
 	    final DistanceMatrix distanceMatrix = new DistanceMatrix(system);
 		try {
 			ps.busyCursorWhile(new IRunnableWithProgress() {
 				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+					// 生成并获取distanc的metrix
 					distanceMatrix.generateDistances(monitor);
 					Double[][] distanceMatrix1 = distanceMatrix.getDistanceMatrix();
 					String[] classNames = distanceMatrix.getClassNames();
@@ -74,9 +76,11 @@ public class InsertDataIntoDistanceValue {
 					System.out.println("----小6getEntityNames(为---:"+methodNames);
 					classList = distanceMatrix.getClassList();
 					entityList = distanceMatrix.getEntityList();
+					// 数据库操作
 					ActionsAboutDB actionsAboutDB = new ActionsAboutDB();
 					int maxTableRow =0;
 					try {
+						// 获取distanceValue中最大的methodID
 						maxTableRow = actionsAboutDB.getTableMaxRowofDistance()+1;
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
@@ -86,6 +90,7 @@ public class InsertDataIntoDistanceValue {
 					//System.out.println("----小6classNames.length为---:"+classNames.length);
 					for(int i=0; i<entityList.size();i++)
 						for(int j=0; j<classNames.length; j++){
+							// 过滤掉距离为1的，因为没有参考价值
 							if(distanceMatrix1[i][j] != 1){
 								MyMethod myMethod = (MyMethod) entityList.get(i);
 								List<String> parameterList = myMethod.getParameterList();

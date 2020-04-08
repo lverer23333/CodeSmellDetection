@@ -25,6 +25,7 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
+import en.actions.ExtractClassName;
 import en.actionsofproject.database.ActionsAboutDB;
 import en.actionsofproject.database.ui.ClassInfo;
 import en.entitys.Entity;
@@ -56,14 +57,20 @@ public class ProjectEvolution {
 	public void run() throws Exception{
 //		init();
 		long begin = System.currentTimeMillis();
+		ExtractClassName.consoleStream.println("----Get All Types And All Methods");
 		getAllITypesAndAllIMethods();
 //		print();
 //		writeNameList();
 		System.out.println("all class's sum ------" + types.size());
+		ExtractClassName.consoleStream.println("------All class's sum: " + types.size());
+		ExtractClassName.consoleStream.println("----Insert Classinfo Into DB");
 		insertClassinfoIntoDB();
 		System.out.println("all method's sum ------" + allMethods.size());
+		ExtractClassName.consoleStream.println("------All method's sum: " + allMethods.size());
+		ExtractClassName.consoleStream.println("----Get All Method And All Method Declaration");
 		GetAllIMethodAndAllMethodDeclaration();
 		MethodAndItsRelationedClass relatedClass = new MethodAndItsRelationedClass(types, allMethods);
+		ExtractClassName.consoleStream.println("----Add All Relations");
 		relatedClass.addAllRelations();
 //		MethodAndItsRelationedClass relatedClass = new MethodAndItsRelationedClass(types, allMethods);
 //		for(int i = 0; i < types.size(); i++){

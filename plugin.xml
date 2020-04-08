@@ -54,5 +54,13 @@
          </action>
       </actionSet>
    </extension>
+   <extension
+         point="org.eclipse.ui.console.consoleFactories">
+         <ConsoleFactory
+               class="en.actionsofproject.ConsoleFactory"
+               id="actionsofproject.ConsoleFactory"
+               label="ConsoleFactory">
+         </ConsoleFactory>
+   </extension>
 
 </plugin>
