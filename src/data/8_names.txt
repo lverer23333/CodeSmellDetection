@@ -1,0 +1,1 @@
+get Relations Class * * One Method About Relationed Class Entity * * * *

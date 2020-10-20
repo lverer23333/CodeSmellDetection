@@ -29,6 +29,6 @@
 	<classpathentry kind="lib" path="lib/org.eclipse.ui.navigator_3.5.300.v20130517-0139.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.ui.navigator.source_3.5.300.v20130517-0139.jar"/>
 	<classpathentry kind="lib" path="lib/vscaladoc-1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Administrator/git/FeatrueEnvyPlugin/src/libtensorflow-1.8.0.jar"/>
+	<classpathentry kind="lib" path="lib/libtensorflow-1.3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,0 +1,4 @@
+read Input File * * CC Finder Output Parser * Clone Group * * *
+read Input File * * CC Finder Output Parser * Token * * * *
+read Input File * * CC Finder Output Parser * Clone Detector Output Parser *
+read Input File * * CC Finder Output Parser * Clone Group List * *

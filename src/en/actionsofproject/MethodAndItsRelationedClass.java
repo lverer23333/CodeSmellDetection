@@ -24,6 +24,9 @@ import en.entitys.Entity;
 /**  */
 public class MethodAndItsRelationedClass {
 	
+	// 记录每个类中所含方法
+	public static Map<Integer, List<String>> MethodInClass = new HashMap();
+	
 	IProject iProject;
 	public TypeDeclaration typeDeclarationOfCurrentClass;
 	List<IMethod> allMethods = new ArrayList<IMethod>(); //the iJavaproject's all allMethods
@@ -43,7 +46,7 @@ public class MethodAndItsRelationedClass {
 			//addAllRelations(method);
 		}	
 	}
-	/** 添加method信息到数据库 */
+	/** 添加method信息到数据库，并且将该方法添加到对应MethodInClass中 */
 	public int addMethodInfo(IMethod method, MethodDeclaration methodDeclaration) throws Exception{
 		if(!method.isConstructor()){
 			ActionsAboutDB actionsAboutDB = new ActionsAboutDB();
@@ -54,6 +57,17 @@ public class MethodAndItsRelationedClass {
 			String methodParameters = methodParameters(methodDeclaration);
 			MethodInfo methodInfo = new MethodInfo(maxTableRow, methodName, methodParameters, methodOfClass);
 			int i = actionsAboutDB.insertMethodInfo(methodInfo);
+			
+			// MethodInClass添加
+			int class_id = actionsAboutDB.getRelationsClassID(methodOfClass);
+			if (!MethodInClass.containsKey(class_id)) {
+				List<String> list_temp = new ArrayList<String>();
+				list_temp.add(methodName);
+				MethodInClass.put(class_id, list_temp);
+			}
+			else
+				MethodInClass.get(class_id).add(methodName);
+			
 			return i;
 		}
 		else

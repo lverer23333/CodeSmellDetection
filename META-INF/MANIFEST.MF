@@ -23,7 +23,8 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JRE-1.1
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.jdt.core
-Bundle-ClassPath: lib1/diffutils-1.2.1.jar,
+Bundle-ClassPath: .,
+ lib1/diffutils-1.2.1.jar,
  lib1/dom4j-1.6.1.jar,
  lib1/intt.jar,
  lib1/mysql-connector-java-5.1.22-bin.jar,
@@ -41,6 +42,9 @@ Bundle-ClassPath: lib1/diffutils-1.2.1.jar,
  lib1/xmlbeans-qname.jar,
  lib1/xmlbeans-xmlpublic-2.4.0.jar,
  lib1/xmlpublic.jar,
- .,
  lib1/,
- lib/JDedorant.jar
+ lib/JDedorant.jar,
+ lib/libtensorflow-1.3.0.jar,
+ lib/model_weights.pb
+Bundle-NativeCode: src/en/actionsofproject/database/tensorflow_jni.dll; osname=Win32; processor=x86-64
+

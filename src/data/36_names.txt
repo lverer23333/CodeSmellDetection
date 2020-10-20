@@ -1,0 +1,1 @@
+get Preproprossed File * * CC Finder Output Parser * Clone Detector Output Parser *

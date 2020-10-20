@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -23,6 +24,7 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.IVariableBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
 import en.actions.ExtractClassName;
@@ -74,6 +76,10 @@ public class ProjectEvolution {
 		ExtractClassName.consoleStream.println("----Get All Method And All Method Declaration");
 		
 		GetAllIMethodAndAllMethodDeclaration();
+		
+		// 更新class中的allMethod信息
+		ActionsAboutDB actionsAboutDB = new ActionsAboutDB();
+		actionsAboutDB.addAllMethods();
 		
 		MethodAndItsRelationedClass relatedClass = new MethodAndItsRelationedClass(types, allMethods);
 		ExtractClassName.consoleStream.println("----Add All Relations");
@@ -181,6 +187,8 @@ public class ProjectEvolution {
 			// 添加method信息到数据库
 			MethodAndItsRelationedClass relatedClass = new MethodAndItsRelationedClass(types, allMethods);
 			relatedClass.addMethodInfo(method, methodDeclaration);
+			
+			
 //			methodAndItsMehthodDeclaration.put(method, methodDeclaration);
 		}
 	}

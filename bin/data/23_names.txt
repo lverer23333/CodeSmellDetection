@@ -1,0 +1,1 @@
+get Clone Instance * * Clone Detector Output Parser * Resource Info * * *
